@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+ 
+
+int main(int argc, char *argv[])
+{
+    int fd;
+    char *aux;
+    int size;
+    int nlineas =1;
+    int npalabras;
+    fd=open(argv[1], O_RDONLY);
+    size =read(fd, &aux ,1); 
+/*el parámetro 1 es el archivo que queremos abrir, el parámetro 2 es el buffer que tienes que ser definido a parte, el tercero es el número de bytes que vamos a ir leyendo, en nuestro caso solo tenemos que leer un caracter.*/
+    if(size == 1){
+		while(size==1){
+		    if(aux==' '){
+		        /*palabra nueva*/
+		        npalabras++;
+		        }
+		    else if(aux=='\n'){
+		       nlineas++;
+		       npalabras++;
+		    }
+		    
+		    else if(aux=='\t'){
+		    	npalabras++;
+		    }
+		   
+		}
+	} else{
+		printf("Error en open");
+	}
+
+	/* If less than two arguments (argv[0] -> program, argv[1] -> file to process) print an error y return -1 */
+	if(argc < 2)
+	{
+		printf("Too few arguments\n");
+		return -1;
+	}
+		printf("Lineas: %d y palabras: %d", nlineas, npalabras);
+
+	return 0;
+}
